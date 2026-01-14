@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
+import { useAuth } from '@/contexts/AuthContext';
 import { useI18n, useUser } from '@/hooks';
 import { useTheme } from '@/theme';
 
@@ -14,6 +15,7 @@ function Example() {
   const { t } = useTranslation();
   const { useFetchOneQuery } = useUser();
   const { toggleLanguage } = useI18n();
+  const { logout, user } = useAuth();
 
   const {
     backgrounds,
@@ -80,10 +82,15 @@ function Example() {
               {t('screen_example.title')}
             </Text>
             <Text
-              style={[fonts.size_16, fonts.gray200, gutters.marginBottom_40]}
+              style={[fonts.size_16, fonts.gray200, gutters.marginBottom_16]}
             >
               {t('screen_example.description')}
             </Text>
+            {user && (
+              <Text style={[fonts.size_14, fonts.gray600, gutters.marginBottom_24]}>
+                Logged in as: {user.email}
+              </Text>
+            )}
           </View>
 
           <View
@@ -127,6 +134,35 @@ function Example() {
               <IconByVariant path="language" stroke={colors.purple500} />
             </TouchableOpacity>
           </View>
+
+          {/* Logout Button */}
+          <TouchableOpacity
+            onPress={() => {
+              Alert.alert(
+                'Logout',
+                'Are you sure you want to logout?',
+                [
+                  { text: 'Cancel', style: 'cancel' },
+                  { text: 'Logout', onPress: () => void logout(), style: 'destructive' },
+                ],
+              );
+            }}
+            style={[
+              components.buttonCircle,
+              {
+                height: 48,
+                width: '100%',
+                borderRadius: 12,
+                backgroundColor: colors.red500,
+              },
+              gutters.marginTop_24,
+            ]}
+            testID="logout-button"
+          >
+            <Text style={[fonts.size_16, fonts.bold, { color: colors.white }]}>
+              Logout
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeScreen>

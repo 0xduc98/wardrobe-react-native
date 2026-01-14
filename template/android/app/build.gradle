@@ -79,7 +79,7 @@ android {
 
     namespace "com.boilerplate"
     defaultConfig {
-        applicationId "com.boilerplate"
+        applicationId "com.wardrobe"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -116,4 +116,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // TensorFlow Lite for YOLO detection
+    implementation 'org.tensorflow:tensorflow-lite:2.13.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.4.4'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.13.0' // Optional: GPU acceleration
 }

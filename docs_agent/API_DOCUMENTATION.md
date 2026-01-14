@@ -21,7 +21,67 @@ The Wardrobe Backend API provides endpoints for:
 
 ## Authentication
 
-**MVP**: The system uses a Dual Token Strategy (JWT Access Token + Persistent Refresh Token). See `AUTH_GUIDE.md` for full implementation details and client-side integration guidelines.
+**MVP**: The system uses a Dual Token Strategy (JWT Access Token + Persistent Refresh Token).
+
+### Client-Side Implementation (React Native)
+
+The authentication system has been fully implemented in the React Native app with the following components:
+
+**Security Features**:
+- ✅ Secure token storage using `react-native-keychain` (Keychain on iOS, Keystore on Android)
+- ✅ Automatic token refresh before expiry (< 60s buffer)
+- ✅ Token rotation on refresh (backend rotates refresh tokens)
+- ✅ Request deduplication (only one refresh call in flight at a time)
+- ✅ Session persistence across app restarts
+- ✅ Graceful error handling (401, 409, 400, 500, network errors)
+
+**File Structure**:
+```
+src/
+├── types/auth.ts                 # TypeScript interfaces for auth
+├── services/
+│   ├── secureStorage.ts          # Secure token storage (Keychain/Keystore)
+│   ├── authApi.ts                # Auth API endpoints
+│   └── httpClient.ts             # HTTP client with auto-refresh interceptor
+├── contexts/
+│   └── AuthContext.tsx           # Auth state management & provider
+├── screens/
+│   ├── Login/Login.tsx           # Login screen
+│   └── Register/Register.tsx     # Register screen
+└── navigation/Application.tsx    # Auth guards & routing
+```
+
+**Usage Example**:
+```typescript
+import { useAuth } from '@/contexts/AuthContext';
+
+function MyComponent() {
+  const { user, isAuthenticated, login, logout } = useAuth();
+
+  const handleLogin = async () => {
+    await login({ email: 'user@example.com', password: 'password' });
+  };
+
+  if (!isAuthenticated) {
+    return <LoginScreen />;
+  }
+
+  return <Text>Welcome, {user?.email}</Text>;
+}
+```
+
+**Token Refresh Flow**:
+1. Before any protected API call, check if access token expires in < 60s
+2. If yes, automatically call `/api/v1/token/refresh` with refresh token
+3. Store new tokens (both access and refresh are rotated)
+4. Retry original request with new access token
+5. If refresh fails (401), clear tokens and redirect to login
+
+**Session Persistence**:
+- On app start, `AuthContext` checks for stored tokens in Keychain/Keystore
+- If refresh token is valid, fetches user profile and restores session
+- If expired, clears tokens and shows login screen
+- No re-login required unless tokens are revoked or expired
 
 ### Register
 

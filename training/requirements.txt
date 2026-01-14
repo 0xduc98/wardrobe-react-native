@@ -1,0 +1,21 @@
+# YOLOv8n Fashion Detector Training Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+ultralytics>=8.0.0        # YOLOv8 framework
+torch>=2.0.0              # PyTorch for deep learning
+torchvision>=0.15.0       # Image transformations
+
+# Dataset handling
+roboflow>=1.1.0           # Dataset download (optional but recommended)
+Pillow>=9.0.0             # Image processing
+tqdm>=4.65.0              # Progress bars
+
+# Model export
+coremltools>=7.0.0        # CoreML export (macOS only, optional)
+onnx>=1.14.0              # ONNX export (optional)
+
+# Development tools (optional)
+matplotlib>=3.7.0         # Visualization
+jupyter>=1.0.0            # Jupyter notebooks
+ipywidgets>=8.0.0         # Interactive widgets for notebooks
