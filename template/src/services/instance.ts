@@ -1,6 +1,6 @@
 import ky from 'ky';
 
-const prefixUrl = `${process.env.API_URL ?? ''}/`;
+const prefixUrl = `http://localhost:5001/`;
 
 export const instance = ky.extend({
   headers: {

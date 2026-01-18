@@ -78,7 +78,7 @@ async function refreshAccessToken(): Promise<AuthTokens | null> {
 /**
  * Get fresh access token (with auto-refresh if needed)
  */
-async function getFreshAccessToken(): Promise<string | null> {
+export async function getFreshAccessToken(): Promise<string | null> {
   const tokenData = await SecureStorage.getTokens();
 
   if (!tokenData) {

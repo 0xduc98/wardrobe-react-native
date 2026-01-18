@@ -1,4 +1,4 @@
-import { SafeScreen } from '@/components/template';
+import { SafeScreen } from '@/components/templates';
 import { View, Text } from 'react-native';
 import { useTheme } from '@/theme';
 

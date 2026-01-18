@@ -1,4 +1,5 @@
 export { default as Example } from './Example/Example';
+export { default as Chat } from './Chat/ChatScreen';
 export { default as Home } from './Home/Home';
 export { default as Login } from './Login/Login';
 export { default as Register } from './Register/Register';
