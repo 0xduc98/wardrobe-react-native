@@ -1,7 +1,7 @@
 import type { RootScreenProps } from '@/navigation/types';
 
 import { useTranslation } from 'react-i18next';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Paths } from '@/navigation/paths';
 import { useTheme } from '@/theme';
@@ -29,14 +29,7 @@ function ActionCard({ color, description, icon, onPress, title }: ActionCardProp
         borders.rounded_16,
         gutters.padding_16,
         gutters.marginBottom_16,
-        {
-          elevation: 3,
-          minHeight: 120,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-        },
+        styles.cardShadow,
       ]}
     >
       <View style={[layout.row, layout.itemsCenter, gutters.gap_12]}>
@@ -84,7 +77,7 @@ function ActionCard({ color, description, icon, onPress, title }: ActionCardProp
 
 function Home({ navigation }: RootScreenProps<Paths.Home>) {
   const { t } = useTranslation();
-  const { backgrounds, borders, fonts, gutters, layout } = useTheme();
+  const { backgrounds, borders, colors, fonts, gutters, layout } = useTheme();
 
   const handleWardrobePress = () => {
     // Navigate to wardrobe selection
@@ -99,6 +92,14 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
   const handleUploadPress = () => {
     // Navigate to upload screen
     navigation.navigate(Paths.Auxi);
+  };
+
+  const handleChatPress = () => {
+    navigation.navigate(Paths.Chat);
+  };
+
+  const handleTestDetectionPress = () => {
+    navigation.navigate(Paths.TestDetection);
   };
 
   return (
@@ -150,7 +151,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
           </Text>
 
           <ActionCard
-            color="#007AFF"
+            color={colors.systemBlue}
             description={t('screen_home.wardrobe_description', {
               defaultValue: 'Browse your saved wardrobe items and select from your collection',
             })}
@@ -160,7 +161,17 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
           />
 
           <ActionCard
-            color="#34C759"
+            color={colors.systemIndigo}
+            description={t('screen_home.chat_description', {
+              defaultValue: 'Ask the Wardrobe Assistant questions and build outfits',
+            })}
+            icon="send"
+            onPress={handleChatPress}
+            title={t('screen_home.chat_title', { defaultValue: 'Chat with AI' })}
+          />
+
+          <ActionCard
+            color={colors.systemGreen}
             description={t('screen_home.saved_description', {
               defaultValue: 'Use previously saved images from your gallery',
             })}
@@ -170,13 +181,21 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
           />
 
           <ActionCard
-            color="#AF52DE"
+            color={colors.systemPurple}
             description={t('screen_home.upload_description', {
               defaultValue: 'Upload a new image from your camera or photo library',
             })}
             icon="send"
             onPress={handleUploadPress}
             title={t('screen_home.upload_title', { defaultValue: 'Upload New Image' })}
+          />
+
+          <ActionCard
+            color={colors.systemRed}
+            description="Test YOLO garment detection with an image from your gallery"
+            icon="send"
+            onPress={handleTestDetectionPress}
+            title="Test YOLO Detection"
           />
         </View>
 
@@ -213,7 +232,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
                 <View
                   style={[
                     {
-                      backgroundColor: '#FF950015',
+                      backgroundColor: `${colors.systemOrange}15`,
                       borderRadius: 8,
                       padding: 8,
                     },
@@ -222,7 +241,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
                   <IconByVariant
                     height={20}
                     path="send"
-                    stroke="#FF9500"
+                    stroke={colors.systemOrange}
                     width={20}
                   />
                 </View>
@@ -233,7 +252,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
               <IconByVariant
                 height={16}
                 path="send"
-                stroke="#8E8E93"
+                stroke={colors.systemGray}
                 width={16}
               />
             </TouchableOpacity>
@@ -241,7 +260,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
             <View
               style={[
                 {
-                  backgroundColor: '#C6C6C8',
+                  backgroundColor: colors.separator,
                   height: 1,
                   marginVertical: 8,
                 },
@@ -261,7 +280,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
                 <View
                   style={[
                     {
-                      backgroundColor: '#5856D615',
+                      backgroundColor: `${colors.systemIndigo}15`,
                       borderRadius: 8,
                       padding: 8,
                     },
@@ -270,7 +289,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
                   <IconByVariant
                     height={20}
                     path="send"
-                    stroke="#5856D6"
+                    stroke={colors.systemIndigo}
                     width={20}
                   />
                 </View>
@@ -281,7 +300,7 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
               <IconByVariant
                 height={16}
                 path="send"
-                stroke="#8E8E93"
+                stroke={colors.systemGray}
                 width={16}
               />
             </TouchableOpacity>
@@ -291,5 +310,16 @@ function Home({ navigation }: RootScreenProps<Paths.Home>) {
     </SafeScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  cardShadow: {
+    elevation: 3,
+    minHeight: 120,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+  },
+});
 
 export default Home;

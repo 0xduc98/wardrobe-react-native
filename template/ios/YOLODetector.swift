@@ -21,12 +21,6 @@ class YOLODetector: NSObject {
     }
     
     private func loadModel() {
-        // TODO: Load yolov8n_fashion.mlmodel when provided
-        // For now, log placeholder message
-        NSLog("[YOLODetector] Model loading placeholder - add yolov8n_fashion.mlmodel to ios/Models/")
-        
-        // Uncomment when model is added:
-        /*
         guard let modelURL = Bundle.main.url(forResource: "yolov8n_fashion", withExtension: "mlmodelc") else {
             NSLog("[YOLODetector] Model file not found in bundle")
             return
@@ -39,7 +33,6 @@ class YOLODetector: NSObject {
         } catch {
             NSLog("[YOLODetector] Failed to load model: \(error)")
         }
-        */
     }
     
     @objc
@@ -64,9 +57,6 @@ class YOLODetector: NSObject {
             return
         }
         
-        // Run inference (placeholder - will be implemented when model is added)
-        // TODO: Implement Vision framework inference when model is available
-        /*
         guard let cgImage = image.cgImage else {
             reject("INVALID_IMAGE", "Failed to get CGImage from UIImage", nil)
             return
@@ -129,22 +119,6 @@ class YOLODetector: NSObject {
         } catch {
             reject("INFERENCE_FAILED", "Failed to perform inference: \(error.localizedDescription)", error)
         }
-        */
-        
-        // Placeholder result until model is added
-        let result: [String: Any] = [
-            "category": "top",
-            "confidence": 0.0,
-            "bbox": [
-                "x": 0,
-                "y": 0,
-                "width": 100,
-                "height": 100
-            ],
-            "alternativePredictions": []
-        ]
-        
-        resolve(result)
     }
     
     private func loadImage(from uriString: String) -> UIImage? {

@@ -8,7 +8,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Paths } from '@/navigation/paths';
 import { useTheme } from '@/theme';
 
-import { Example, Home, Login, Register, Startup } from '@/screens';
+import {
+  Chat,
+  Example,
+  Home,
+  Login,
+  Register,
+  Startup,
+  TestDetectionScreen,
+} from '@/screens';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -25,7 +33,19 @@ function ApplicationNavigator() {
             <Stack.Screen component={Startup} name={Paths.Startup} />
           ) : isAuthenticated ? (
             // Authenticated screens
-            <Stack.Screen component={Home} name={Paths.Home} />
+            <>
+              <Stack.Screen component={Home} name={Paths.Home} />
+              <Stack.Screen
+                component={Chat}
+                name={Paths.Chat}
+                options={{ headerShown: false, title: 'Wardrobe Assistant' }}
+              />
+              <Stack.Screen
+                component={TestDetectionScreen}
+                name={Paths.TestDetection}
+                options={{ headerShown: true, title: 'Test Detection' }}
+              />
+            </>
           ) : (
             // Unauthenticated screens
             <>
